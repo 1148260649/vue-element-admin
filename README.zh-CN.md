@@ -176,11 +176,17 @@ cd vue-element-admin
 # 安装依赖
 npm install
 
+# 存在警告 Unsupported engine 忽略或者添加 --no-optional 即可
+npm install --no-optional
+
 # 建议不要直接使用 cnpm 安装依赖，会有各种诡异的 bug。可以通过如下操作解决 npm 下载速度慢的问题
 npm install --registry=https://registry.npm.taobao.org
 
 # 启动服务
 npm run dev
+
+# 启动服务
+npm run serve
 ```
 
 浏览器访问 http://localhost:9527
@@ -209,6 +215,30 @@ npm run lint
 
 # 代码格式检查并自动修复
 npm run lint -- --fix
+```
+
+## 遇到的问题
+```bash
+项目中使用到 Markdown 组件（它封装的是tui-editor） 其中 tui-editor 新版本改名了，改成了@toast-ui/editor 
+以下有两种方法 推荐第一种
+  一、所以需要重新安装版本包
+    1、安装@toast-ui/editor包
+      npm install @toast-ui/editor --save
+      npm install --save codemirror
+    
+    2、修改 src/components/MarkdownEditor/index.vue（将以前引入的tui-editor相关内容替换成@toast-ui/editor,涉及到的getValue方法getMarkdown,setValue改成setMarkdown）。具体修改如下：
+  
+  二、删除ssh
+    1、打开package.json把"tui-editor"删掉
+    2、删除"tui-editor"相关路由、components，具体文件地址如下：
+    路由位置：
+    src/router/modules/components.js 搜索"markdown"，把相应markdown路由代码删除；
+    components位置：
+    src/components/MarkdownEditor 删除后，再执行npm install 或 npm install --registry=registry.npm.taobao.org 下载并运行成功！
+
+  参考网址
+    https://www.jianshu.com/p/6c1d399b4eaf
+    https://blog.csdn.net/wdswei/article/details/128826077
 ```
 
 更多信息请参考 [使用文档](https://panjiachen.github.io/vue-element-admin-site/zh/)
