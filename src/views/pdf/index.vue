@@ -30,7 +30,7 @@
 
     <!-- 文件流查看pdf -->
     <el-dialog
-      id="elDialogCss1"
+      class="elDialogCss"
       center
       fullscreen
       :visible.sync="pdfFileBytesDialogVisible"
@@ -54,10 +54,10 @@
 
     <!-- 样例 -->
     <el-dialog
-      center
-      fullscreen
-      :visible.sync="test001DialogVisible"
       class="elDialogCss"
+      center
+      :fullscreen="true"
+      :visible.sync="test001DialogVisible"
     >
       <div class="zhjxMain">
         <div class="content">
@@ -395,8 +395,11 @@ export default {
 
 <style scoped lang="scss">
 
->>>#elDialogCss1 .el-dialog {
-  background: #fff0;
+::v-deep .elDialogCss .el-dialog {
+  background: rgba(0, 0, 0, 0.01);
+}
+::v-deep .elDialogCss .el-dialog .el-dialog__headerbtn .el-dialog__close {
+  background: #ffffff;
 }
 
 .elDialogCssDiv{
