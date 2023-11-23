@@ -6,9 +6,13 @@
           <div style="height: 725px;overflow: auto;" @scroll="scrollListener($event)">
             <el-row :id="stepList[0].key" class="custRowCss">
               <el-card>
-                <div style="height: 500px;">
-                  <span>111</span>
-                </div>
+                <el-date-picker
+                  v-model="dateTest.exCheckDate"
+                  type="date"
+                  :picker-options="dateTest.pickerOptions"
+                  value-format="yyyy-MM-dd"
+                  placeholder="Please select"
+                />
               </el-card>
             </el-row>
             <el-row :id="stepList[1].key" class="custRowCss">
@@ -94,9 +98,22 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   data() {
     return {
+      dateTest: {
+        exCheckDate: '2023-11-23',
+        pickerOptions: {
+          disabledDate: (time) => {
+            // 如果函数处理比较简单,可以直接在这里写逻辑方法
+            // return time.getTime() < Date.now() - 8.64e7
+            // 如果函数里处理的数据比较麻烦,也可以单独放在一个函数里,避免data数据太臃肿
+            return this.judgeDateIsIn(time)
+          }
+        }
+      },
       activeNumber: 0,
       stepList: [
         {
@@ -255,6 +272,22 @@ export default {
      */
     getDIctStr(distType, distValue) {
       return this.tableDicts[distType][distValue]
+    },
+    /**
+     * 判断日期是否在可用范围内
+     */
+    judgeDateIsIn(time) {
+      const date = new Date() // 获取当前日期和时间
+      const formattedDate = moment(date).format('YYYY-MM-DD')
+      console.log(formattedDate) // 输出格式为 "yyyy-MM-dd" 的日期字符串
+      // time.getTime是把选中的时间转化成自1970年1月1日 00:00:00 UTC到当前时间的毫秒数
+      // Date.now()是把今天的时间转化成自1970年1月1日 00:00:00 UTC到当前时间的毫秒数,这样比较好比较
+      // return的值,true是不可以操作选择,false可以操作选择,比如下面这个判断就只能选择今天之后的时间
+      return time.getTime() > Date.now()
+
+      // 这里减8.64e7的作用是,让今天的日期可以选择,如果不减的话,今天的日期就不可以选择,判断中写<= 也是没用的,一天的毫秒数就是8.64e7
+      // return time.getTime() <= Date.now()
+      // return time.getTime() < Date.now() - 8.64e7
     }
   }
 }
