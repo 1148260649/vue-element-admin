@@ -11,7 +11,7 @@ import componentsRouter from './modules/components'
 import chartsRouter from './modules/charts'
 import tableRouter from './modules/table'
 import nestedRouter from './modules/nested'
-import cardSrcoll from './modules/test/cardScroll'
+import myTest from './modules/test/myTest'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -189,7 +189,7 @@ export const asyncRoutes = [
   componentsRouter,
   chartsRouter,
   nestedRouter,
-  cardSrcoll,
+  myTest,
   tableRouter,
 
   {
@@ -336,7 +336,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/pdf/index'),
+        component: () => import('@/views/test/pdfVIew/index.vue'),
         name: 'PDF',
         meta: { title: 'pdf', icon: 'pdf' }
       }

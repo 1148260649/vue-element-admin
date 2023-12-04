@@ -6,6 +6,11 @@
           <div style="height: 725px;overflow: auto;" @scroll="scrollListener($event)">
             <el-row :id="stepList[0].key" class="custRowCss">
               <el-card>
+                <el-row>
+                  <span class="custSpanLeb">
+                    个人信息
+                  </span>
+                </el-row>
                 <el-date-picker
                   v-model="dateTest.exCheckDate"
                   type="date"
@@ -298,8 +303,25 @@ export default {
 ::-webkit-scrollbar {
   display: none;
 }
+
 .custRowCss {
   padding: 5px 5px 5px 5px;
   margin-bottom: 15px;
+}
+
+.custSpanLeb{
+  height: 25px;
+  line-height: 25px;
+}
+.custSpanLeb:before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 25px;
+  background-color: #409EFF;
+  border-radius: 0 2px 2px 0;
+  position: relative;
+  top: 2px;
+  //left: 20px;
 }
 </style>

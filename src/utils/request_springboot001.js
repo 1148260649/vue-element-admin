@@ -39,13 +39,21 @@ const handleBlob = function(blob) {
 const service_springboot001 = axios.create({
   baseURL: process.env.VUE_APP_BASE_HOST + process.env.VUE_APP_BASE_API_JZ, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
+  timeout: 10000 // request timeout
 })
 
 // request interceptor
 service_springboot001.interceptors.request.use(
   config => {
     // do something before request is sent
+
+    // 增肌 springboot001 的认证信息
+    config.headers['Authorization'] = 'Basic YWRtaW46YWRtaW4='
+    config.data = {
+      data: config.data.data,
+      pageParam: config.data.pageParam,
+      meta: _meta
+    }
 
     if (store.getters.token) {
       // let each request carry token

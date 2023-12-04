@@ -2,6 +2,15 @@
  * Created by PanJiaChen on 16/11/18.
  */
 
+export function getDefaultPage() {
+  return {
+    pageNumber: 1,
+    pageSize: 10,
+    totalPage: 0,
+    totalRecord: 0
+  }
+}
+
 /**
  * Parse the time to string
  * @param {(Object|string|number)} time
