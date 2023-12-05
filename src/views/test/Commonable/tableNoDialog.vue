@@ -11,7 +11,7 @@
           <el-col
             v-for="(item,index) of formItems"
             :key="item['interfaceColumn'] + index"
-            :span="8"
+            :span="formSpan.item"
           >
             <el-form-item
               :label="item['interfaceName'] + ':'"
@@ -68,7 +68,7 @@
               />
             </el-form-item>
           </el-col>
-          <el-col :span="10" :offset="6">
+          <el-col :span="formSpan.button_span" :offset="formSpan.button_offset">
             <el-button type="success" :loading="tableLoadIng" @click="query"> <svg-icon icon-class="search" /> 查询</el-button>
             <el-button :loading="tableLoadIng" icon="el-icon-refresh" @click="resetForm"> 重置</el-button>
             <el-button v-if="tableListDownload" icon="el-icon-download" type="primary" :loading="tableLoadIng" @click="downLoad"> 下载
@@ -159,6 +159,11 @@ export default {
         //   interfaceType: 'NUMBER'
         // }
       ],
+      formSpan: {
+        item: 8,
+        button_span: 10,
+        button_offset: 6
+      },
       columns: [
         // {
         //   interfaceColumn: 'queryDate',
@@ -297,6 +302,7 @@ export default {
         }
       }
       this.formItems = formItemList
+      this.formSpan.button_offset = 24 - (this.formItems.length * this.formSpan.item + this.formSpan.button_span) % 24
     },
     /**
      * 获取时间 yyyy-MM
