@@ -11,19 +11,26 @@
                     个人信息
                   </span>
                 </el-row>
-                <el-date-picker
-                  v-model="dateTest.exCheckDate"
-                  type="date"
-                  :picker-options="dateTest.pickerOptions"
-                  value-format="yyyy-MM-dd"
-                  placeholder="Please select"
-                />
+                <el-row>
+                  <el-date-picker
+                    v-model="dateTest.exCheckDate"
+                    type="date"
+                    :picker-options="dateTest.pickerOptions"
+                    value-format="yyyy-MM-dd"
+                    placeholder="Please select"
+                  />
+                </el-row>
+                <el-row>
+                  <p class="red blue">我是什么颜色</p>
+                </el-row>
               </el-card>
             </el-row>
             <el-row :id="stepList[1].key" class="custRowCss">
               <el-card>
                 <div style="height: 500px;">
+                  <el-button @click="changeRowData">改变第一行数据描述</el-button>
                   <el-table
+                    ref="costTable"
                     :v-loading="tableLoading"
                     :data="tableData"
                     border
@@ -222,6 +229,15 @@ export default {
           'dayExpenditure': '33.39',
           'dailyIncome': '0.00',
           'monthlyExpenditure': '100.00'
+        },
+        {
+          'dateOfPurchase': '2023-11-22',
+          'theAmountSpent': '11.39',
+          'consumptionDescription': '外卖',
+          'paymentMethods': 'jhxyk2',
+          'dayExpenditure': '33.39',
+          'dailyIncome': '0.00',
+          'monthlyExpenditure': '100.00'
         }
       ]
     }
@@ -293,6 +309,16 @@ export default {
       // 这里减8.64e7的作用是,让今天的日期可以选择,如果不减的话,今天的日期就不可以选择,判断中写<= 也是没用的,一天的毫秒数就是8.64e7
       // return time.getTime() <= Date.now()
       // return time.getTime() < Date.now() - 8.64e7
+    },
+    /**
+     * 刷新表格数据
+     */
+    changeRowData() {
+      this.tableData[0].consumptionDescription = this.tableData[0].consumptionDescription + '6-'
+      // 数据并不会更新, 随便调用一下页面事件，什么事件都可以，聚焦等都可以，这里使用 element 表格自带的高亮行事件 便调用 页面其他事件 达到页面改变刷新数据 (推荐)
+      this.$refs.costTable.setCurrentRow(this.tableData[0])
+      // 使用 this.$set(this.data,index,row)      比较耗性能
+      this.$set(this.tableData, 0, this.tableData[0])
     }
   }
 }
@@ -313,6 +339,7 @@ export default {
   height: 25px;
   line-height: 25px;
 }
+
 .custSpanLeb:before {
   content: "";
   display: inline-block;
@@ -324,4 +351,13 @@ export default {
   top: 2px;
   //left: 20px;
 }
+
+.blue {
+  color: blue;
+}
+
+.red {
+  color: red;
+}
+
 </style>
