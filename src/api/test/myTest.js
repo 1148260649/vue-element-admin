@@ -58,3 +58,16 @@ export function pdfBase64() {
   })
 }
 
+/**
+ * 查询城市树
+ */
+export function queryCityTreeNodeOptionsList(param, pageParam) {
+  return service_springboot001({
+    url: '/cityInfoDb/cityTreeNodeOptionsList',
+    method: 'post',
+    data: {
+      data: param,
+      pageParam: pageParam
+    }
+  })
+}

@@ -27,11 +27,32 @@ const myTest = {
       meta: { title: '公共表格', noCache: true }
     },
     {
+      path: 'cascader',
+      component: () => import('@/views/test/cascader'),
+      name: 'cascader',
+      isAnon: true,
+      meta: { title: '级联表格', noCache: true }
+    },
+    {
+      path: 'checkbox',
+      component: () => import('@/views/test/checkbox'),
+      name: 'checkbox',
+      isAnon: true,
+      meta: { title: '复选框', noCache: true }
+    },
+    {
       path: 'pdfView',
       component: () => import('@/views/test/pdfVIew'),
       name: 'pdfView',
       isAnon: true,
       meta: { title: 'pdf在线预览', noCache: true }
+    },
+    {
+      path: 'phantomInput',
+      component: () => import('@/views/test/phantomInput'),
+      name: 'phantomInput',
+      isAnon: true,
+      meta: { title: 'Input幽灵建议', noCache: true }
     }
   ]
 }

@@ -128,8 +128,9 @@
 
 <script>
 
-import { deepClone, getDefaultPage } from '@/utils'
+import { deepClone, getDefaultPage, setPage } from '@/utils'
 import { configListAjax, queryTableListAjax } from '@/api/test/myTest'
+import moment from 'moment/moment'
 
 export default {
   name: 'TableNoDialog',
@@ -175,8 +176,6 @@ export default {
       ],
       tableDataList: [],
       searchForm: {
-        queryDate: '',
-        dateTime: '2023-11-12'
       },
       searchColumns: [],
       dictTypeDesc: {
@@ -228,18 +227,23 @@ export default {
      */
     async queryTableList() {
       this.tableLoadIng = true
+      console.log(this.searchForm)
+      let searchDateTime = moment(new Date()).format('YYYY-MM-DD')
+      if (this.searchForm.dateOfPurchase) {
+        searchDateTime = this.searchForm.dateOfPurchase
+      }
       const param = {
         interfaceNo: this.dataParam.code,
-        dateTime: this.searchForm.dateTime
+        dateTime: searchDateTime
       }
       await queryTableListAjax(param, this.page).then(response => {
         this.tableLoadIng = false
-        console.log(response)
+        // console.log(response)
         this.$message({
           message: '数据加载成功',
           type: 'success'
         })
-        this.page = response.resData
+        this.page = setPage(response.resData)
         this.tableDataList = response.resData.pageList
       }).catch(err => {
         this.tableLoadIng = false

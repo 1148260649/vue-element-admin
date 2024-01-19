@@ -11,6 +11,15 @@ export function getDefaultPage() {
   }
 }
 
+export function setPage(pageObj) {
+  return {
+    pageNumber: pageObj.pageNumber,
+    pageSize: pageObj.pageSize,
+    totalPage: pageObj.totalPage,
+    totalRecord: pageObj.totalRecord
+  }
+}
+
 /**
  * Parse the time to string
  * @param {(Object|string|number)} time
