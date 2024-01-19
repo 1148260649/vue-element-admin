@@ -11,7 +11,7 @@
                     个人信息
                   </span>
                 </el-row>
-                <el-row>
+                <el-row :gutter="50">
                   <el-col :span="6">
                     <el-date-picker
                       v-model="dateTest.exCheckDate"
@@ -25,7 +25,7 @@
                     <el-date-picker
                       v-model="dateTest.limitCustomizeDate"
                       type="date"
-                      :picker-options="{limitCustomizeOptions}"
+                      :picker-options="dateTest.limitCustomizeDateOptions"
                       value-format="yyyy-MM-dd"
                       placeholder="Please select"
                     />
@@ -130,14 +130,6 @@ export default {
     return {
       dateTest: {
         exCheckDate: '2023-11-23',
-        limitCustomizeDate: '2024-01-15',
-        limitCustomizeDateList: {
-          '2024-01-15': true,
-          '2024-01-18': true,
-          '2024-02-01': true,
-          '2024-02-05': true,
-          '2024-02-25': true
-        },
         pickerOptions: {
           disabledDate: (time) => {
             // 如果函数处理比较简单,可以直接在这里写逻辑方法
@@ -145,6 +137,19 @@ export default {
             // 如果函数里处理的数据比较麻烦,也可以单独放在一个函数里,避免data数据太臃肿
             return this.judgeDateIsIn(time)
           }
+        },
+        limitCustomizeDate: '2024-01-15',
+        limitCustomizeDateOptions: {
+          disabledDate: (time) => {
+            return this.judgeLimitCustomizeOptions(time)
+          }
+        },
+        limitCustomizeDateList: {
+          '2024-01-15': true,
+          '2024-01-18': true,
+          '2024-02-01': true,
+          '2024-02-05': true,
+          '2024-02-25': true
         }
       },
       activeNumber: 0,
@@ -336,11 +341,10 @@ export default {
      * 自定义限制日期
      * @param time 日期
      */
-    limitCustomizeOptions(time) {
-      console.log(time)
+    judgeLimitCustomizeOptions(time) {
       var s = moment(time).format('YYYY-MM-DD')
-      console.log(s)
-      return !this.limitCustomizeDateList[moment(time).format('YYYY-MM-DD')]
+      // console.log(s)
+      return !this.dateTest.limitCustomizeDateList[s]
     },
     /**
      * 刷新表格数据
