@@ -13,6 +13,13 @@ const myTest = {
   },
   children: [
     {
+      path: 'alertMessage',
+      component: () => import('@/views/test/alertMessage'),
+      name: 'alertMessage',
+      isAnon: true,
+      meta: { title: '消息框', noCache: true }
+    },
+    {
       path: 'cardScroll',
       component: () => import('@/views/test/cardScroll'),
       name: 'cardScroll',
