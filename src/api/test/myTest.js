@@ -63,7 +63,21 @@ export function pdfBase64() {
  */
 export function queryCityTreeNodeOptionsList(param, pageParam) {
   return service_springboot001({
-    url: '/cityInfoDb/cityTreeNodeOptionsList',
+    url: '/cityInfoDb/queryDownCityTreeNodeOptionsList',
+    method: 'post',
+    data: {
+      data: param,
+      pageParam: pageParam
+    }
+  })
+}
+
+/**
+ * 根据城市id查询城市信息
+ */
+export function queryCityByPId(param, pageParam) {
+  return service_springboot001({
+    url: '/cityInfoDb/queryCityByPId',
     method: 'post',
     data: {
       data: param,
