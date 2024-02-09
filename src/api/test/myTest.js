@@ -85,3 +85,16 @@ export function queryCityByPId(param, pageParam) {
     }
   })
 }
+
+/**
+ * 文件上传
+ * @param searchParam
+ */
+export function importFile(searchParam) {
+  return service_springboot001({
+    url: '/qqqw',
+    method: 'post',
+    responseType: 'blob',
+    data: searchParam
+  })
+}

@@ -60,6 +60,13 @@ const myTest = {
       name: 'phantomInput',
       isAnon: true,
       meta: { title: 'Input幽灵建议', noCache: true }
+    },
+    {
+      path: 'uploadFile',
+      component: () => import('@/views/test/uploadFile'),
+      name: 'uploadFile',
+      isAnon: true,
+      meta: { title: '上传文件', noCache: true }
     }
   ]
 }
