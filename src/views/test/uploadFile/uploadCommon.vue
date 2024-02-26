@@ -117,21 +117,16 @@ export default {
           type: 'warning',
           duration: 5 * 1000
         })
+        return
       }
       const fileFormData = new FormData()
       fileFormData.append('file', thatThis.fileList[0])
       thatThis.importLoading = true
+      debugger
       importFile(fileFormData).then(res => {
         thatThis.importLoading = false
-        this.$message({
-          message: '导入失败，请查看错误文件，修改后重新导入',
-          type: 'error',
-          duration: 5 * 1000
-        })
-      }).catch(err => {
-        thatThis.importLoading = false
-        console.log(err)
-        if (err.flag === 0) {
+        console.log(res)
+        if (res.resCode === '200') {
           this.$message({
             message: '导入成功,请稍后查看',
             type: 'success',
@@ -141,11 +136,19 @@ export default {
           thatThis.closed()
         } else {
           this.$message({
-            message: '导入失败,' + err.data,
+            message: '导入失败,' + res.resMessage,
             type: 'error',
             duration: 5 * 1000
           })
         }
+      }).catch(err => {
+        thatThis.importLoading = false
+        console.log(err)
+        this.$message({
+          message: '导入失败，请查看错误文件，修改后重新导入',
+          type: 'error',
+          duration: 5 * 1000
+        })
       })
     },
     /**

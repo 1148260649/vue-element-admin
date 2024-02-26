@@ -87,12 +87,12 @@ export function queryCityByPId(param, pageParam) {
 }
 
 /**
- * 文件上传
+ * 文件上传,成功返回json，异常返回错误文件
  * @param searchParam
  */
 export function importFile(searchParam) {
   return service_springboot001({
-    url: '/qqqw',
+    url: '/importAndResponse',
     method: 'post',
     responseType: 'blob',
     data: searchParam

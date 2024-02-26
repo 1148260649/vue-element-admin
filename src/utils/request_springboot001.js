@@ -6,12 +6,13 @@ import uuid from 'uuid/v4'
 import { getToken, getEncryptedKey } from '@/utils/auth'
 import { encrypted, signature } from '@/utils/crypte'
 
-const createDownload = function(blob, name) {
+const createDownload = function(blob, filename) {
+  console.log(filename)
   const url = window.URL.createObjectURL(new Blob([blob]))
   const $a = document.createElement('a')
   $a.style.display = 'none'
   $a.href = url
-  $a.setAttribute('download', name)
+  $a.setAttribute('download', filename)
   $a.click()
 }
 
@@ -22,8 +23,8 @@ const handleBlob = function(blob) {
     fileReader.onload = function() {
       try {
         const result = JSON.parse(this.result)
-        if (result.flag && result.flag !== 0) {
-          reject(result)
+        if (result.resCode) {
+          resolve(result)
         } else {
           resolve()
         }
@@ -39,7 +40,7 @@ const handleBlob = function(blob) {
 const service_springboot001 = axios.create({
   baseURL: process.env.VUE_APP_BASE_HOST + process.env.VUE_APP_BASE_API_JZ, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 10000 // request timeout
+  timeout: settings.client.timeOut // request timeout
 })
 
 // request interceptor
@@ -47,12 +48,16 @@ service_springboot001.interceptors.request.use(
   config => {
     // do something before request is sent
 
-    // 增肌 springboot001 的认证信息
+    // 增加 springboot001 的认证信息
     config.headers['Authorization'] = 'Basic YWRtaW46YWRtaW4='
-    config.data = {
-      data: config.data.data,
-      pageParam: config.data.pageParam,
-      meta: _meta
+
+    // 如果不是表单类型的数据那么重新设置数据格式
+    if (!(config.data instanceof FormData)) {
+      config.data = {
+        data: config.data.data,
+        pageParam: config.data.pageParam,
+        meta: _meta
+      }
     }
 
     if (store.getters.token) {
@@ -115,13 +120,27 @@ service_springboot001.interceptors.response.use(
             const header_arr = header.toLowerCase().split('filename=')
             if (header_arr.length > 1) {
               filename = header_arr[1]
+              // filename = decodeURIComponent(filename)
               filename = decodeURI(filename)
               break
             }
           }
         }
       }
-      return handleBlob(response.data).then(() => {
+      /*
+      查看了 network ,响应头确实有返回 content-disposition；
+      但是打印以及通过.headers['content-disposition']就是获取不到；
+      是因为cros跨域，浏览器只会返回默认头部的header,并不能完全获取后端自定义的所有数据；
+
+      因此，需要后端在header中添加 Access-Control-Expose-Headers 信息；
+      响应首部 Access-Control-Expose-Headers 就是控制“暴露”的开关，它列出了哪些首部可以作为响应的一部分暴露给外部
+      response.setHeader("Access-Control-Expose-Headers", "Content-Disposition")
+      这个时候就能在前端获取到响应的数据了
+      */
+      return handleBlob(response.data).then((result) => {
+        if (result) {
+          return result
+        }
         createDownload(res, filename)
       }).catch((result) => {
         return Promise.reject(new Error(result.msg))
