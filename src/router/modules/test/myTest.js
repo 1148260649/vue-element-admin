@@ -67,6 +67,13 @@ const myTest = {
       name: 'uploadFile',
       isAnon: true,
       meta: { title: '上传文件', noCache: true }
+    },
+    {
+      path: 'exportPdf',
+      component: () => import('@/views/test/exportPdf'),
+      name: 'exportPdf',
+      isAnon: true,
+      meta: { title: '导出pdf文件', noCache: true }
     }
   ]
 }

@@ -98,3 +98,35 @@ export function importFile(searchParam) {
     data: searchParam
   })
 }
+
+/**
+ * 根据pdf模板创建文件
+ */
+export function createByTemplate() {
+  return service_springboot001({
+    url: '/pdfExport/createByTemplates',
+    method: 'get',
+    responseType: 'blob'
+  })
+}
+
+/**
+ * 根据空的pdf模板文件创建内容
+ */
+export function createByEmptyTemplate() {
+  return service_springboot001({
+    url: '/pdfExport/createByEmptyTemplate',
+    method: 'get',
+    responseType: 'blob'
+  })
+}
+
+/**
+ * 保存文件到服务器路径
+ */
+export function createPdfTableFileSaveLocal() {
+  return service_springboot001({
+    url: '/pdfExport/createPdfTableFileSaveLocal',
+    method: 'get'
+  })
+}

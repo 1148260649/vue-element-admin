@@ -7,6 +7,8 @@ import 'normalize.css/normalize.css' // a modern alternative to CSS resets
 import * as echarts from 'echarts'
 
 import Element from 'element-ui'
+import vueToPdf from 'vue-to-pdf'
+
 import './styles/element-variables.scss'
 
 import '@/styles/index.scss' // global css
@@ -39,6 +41,8 @@ Vue.use(Element, {
   size: Cookies.get('size') || 'medium', // set element-ui default size
   i18n: (key, value) => i18n.t(key, value)
 })
+
+Vue.use(vueToPdf)
 
 Vue.prototype.$echarts = echarts
 

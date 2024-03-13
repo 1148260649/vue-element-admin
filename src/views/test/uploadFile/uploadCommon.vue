@@ -122,7 +122,6 @@ export default {
       const fileFormData = new FormData()
       fileFormData.append('file', thatThis.fileList[0])
       thatThis.importLoading = true
-      debugger
       importFile(fileFormData).then(res => {
         thatThis.importLoading = false
         console.log(res)
