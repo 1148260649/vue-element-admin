@@ -130,3 +130,23 @@ export function createPdfTableFileSaveLocal() {
     method: 'get'
   })
 }
+
+/**
+ * 创建pdf文件（包含多种数据类型）
+ */
+export function createPdf() {
+  return service_springboot001({
+    url: '/pdfExport/createPdf',
+    method: 'get'
+  })
+}
+
+/**
+ * 合并pdf文件
+ */
+export function mergePdfFile() {
+  return service_springboot001({
+    url: '/pdfExport/mergePdfFile',
+    method: 'get'
+  })
+}

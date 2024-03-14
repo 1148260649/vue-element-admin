@@ -186,7 +186,7 @@ service_springboot001.interceptors.response.use(
   error => {
     console.log(error) // for debug
     Message({
-      message: error.resMessage,
+      message: error,
       type: 'error',
       duration: 5 * 1000
     })

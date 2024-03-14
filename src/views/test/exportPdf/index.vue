@@ -92,6 +92,20 @@
               </el-col>
             </el-row>
           </el-form-item>
+          <el-form-item>
+            <el-row>
+              <el-col :span="6">
+                <el-button @click="createPdf"> 创建 pdf 文件（包含多种数据类型）</el-button>
+              </el-col>
+            </el-row>
+          </el-form-item>
+          <el-form-item>
+            <el-row>
+              <el-col :span="6">
+                <el-button @click="mergePdfFile"> 合并 pdf 文件 </el-button>
+              </el-col>
+            </el-row>
+          </el-form-item>
         </el-form>
       </div>
     </el-card>
@@ -103,7 +117,9 @@
 import {
   createByEmptyTemplate,
   createPdfTableFileSaveLocal,
-  createByTemplate
+  createByTemplate,
+  createPdf,
+  mergePdfFile
 } from '@/api/test/myTest'
 
 export default {
@@ -178,6 +194,42 @@ export default {
      */
     serverExportPdf() {
       createPdfTableFileSaveLocal().then(res => {
+        this.$message({
+          message: res.resData,
+          type: 'success',
+          duration: 5 * 1000
+        })
+      }).catch(err => {
+        this.$message({
+          message: err.resMessage,
+          type: 'error',
+          duration: 5 * 1000
+        })
+      })
+    },
+    /**
+     * 创建pdf文件（包含多种数据类型）
+     */
+    createPdf() {
+      createPdf().then(res => {
+        this.$message({
+          message: res.resData,
+          type: 'success',
+          duration: 5 * 1000
+        })
+      }).catch(err => {
+        this.$message({
+          message: err.resMessage,
+          type: 'error',
+          duration: 5 * 1000
+        })
+      })
+    },
+    /**
+     * 合并pdf文件
+     */
+    mergePdfFile() {
+      mergePdfFile().then(res => {
         this.$message({
           message: res.resData,
           type: 'success',
